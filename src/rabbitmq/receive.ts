@@ -1,4 +1,11 @@
-import { connect, Channel, Connection, Options, ConsumeMessage, Message } from 'amqplib'
+import {
+  connect,
+  Channel,
+  Connection,
+  Options,
+  ConsumeMessage,
+  Message
+} from 'amqplib'
 import { ReceiveRabbitMQ } from '../types'
 
 const url: string | Options.Connect =
@@ -6,7 +13,9 @@ const url: string | Options.Connect =
 
 type ReceiveMessageFunc = (receiveMessage: ReceiveRabbitMQ) => Promise<void>
 
-export const receive: ReceiveMessageFunc = async (receiveMessage: ReceiveRabbitMQ) => {
+export const receive: ReceiveMessageFunc = async (
+  receiveMessage: ReceiveRabbitMQ
+) => {
   const connection: Connection = await connect(url)
   console.info('Connect to RabbitMQ success!!!')
   try {
