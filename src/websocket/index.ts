@@ -18,7 +18,7 @@ class Server {
     this.io.on(
       'connection',
       (socket): void => {
-        console.log('User connected!!   ' + 'id: ' + socket.id)
+        console.log('[WebSocket]: User connected!!   ' + 'id: ' + socket.id)
 
         const files: string[] = dir(resolve(__dirname, './socket'))
         files.map(file => {
@@ -49,6 +49,7 @@ class Server {
               }
               if (socketInfo.logger) {
                 console.info(
+                  '[WebSocket]: ',
                   JSON.stringify({
                     wsEngine: 'ws',
                     header: JSON.stringify(socket.conn.request.headers),
@@ -62,7 +63,7 @@ class Server {
         })
 
         socket.on('disconnect', () => {
-          console.log('id: ' + socket.id + '   disconnected!!')
+          console.log('[WebSocket]: id: ' + socket.id + '   disconnected!!')
         })
       }
     )

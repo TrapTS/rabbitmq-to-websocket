@@ -17,7 +17,7 @@ export const receive: ReceiveMessageFunc = async (
   receiveMessage: ReceiveRabbitMQ
 ) => {
   const connection: Connection = await connect(url)
-  console.info('Connect to RabbitMQ success!!!')
+  console.info('[RabbitMQ]: Connect to RabbitMQ success!!!')
   try {
     const channel: Channel = await connection.createChannel()
     await channel.assertQueue(receiveMessage.chananel)
@@ -32,19 +32,19 @@ export const receive: ReceiveMessageFunc = async (
     connection.on(
       'error',
       async (err): Promise<void> => {
-        console.error('------->', err)
+        console.error('[RabbitMQ]: ', err)
         await receive(receiveMessage)
       }
     )
     connection.on(
       'close',
       async (): Promise<void> => {
-        console.error('------->', 'RabbitQM connection closed!')
+        console.error('[RabbitMQ]: ', 'RabbitQM connection closed!')
         await receive(receiveMessage)
       }
     )
   } catch (err) {
-    console.error('------->', err)
+    console.error('[RabbitMQ]: ', err)
     await receive(receiveMessage)
   }
 }

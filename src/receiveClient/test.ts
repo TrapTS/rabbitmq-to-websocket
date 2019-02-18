@@ -4,7 +4,7 @@ import * as io from 'socket.io-client'
 
 const socket = io('ws://localhost:3000')
 socket.on('connect', () => {
-  console.log('Socket connected!!!')
+  console.log('[WebSocket]: Socket connected!!!')
 })
 
 export const test: ReceiveRabbitMQ = {
