@@ -1,19 +1,22 @@
 import { ReceiveRabbitMQ } from '../types'
 import { ConsumeMessage } from 'amqplib'
-import * as io from 'socket.io-client'
+import * as socketio from 'socket.io'
 
-const socket = io('ws://localhost:3000/console')
-socket.on('connect', () => {
-  console.log('[WebSocket]: Socket connected!!!')
-})
+const io = socketio(3000)
 
 export const test: ReceiveRabbitMQ = {
   chananel: 'Hello',
   task: (message: ConsumeMessage | null) => {
     if (!message) throw new Error('message is null!!')
     console.log('[Message]: ', message.content.toString())
-    socket.emit('ddd', {
-      message: message.content.toString()
+    io.of('/hello').on('connect', socket => {
+      console.log('[WebSocket]: User connected!!   ' + 'id: ' + socket.id)
+      socket.emit('ddd', {
+        message: message.content.toString()
+      })
+      socket.on('disconnect', () => {
+        console.log('[WebSocket]: id: ' + socket.id + '   disconnected!!')
+      })
     })
   }
 }
