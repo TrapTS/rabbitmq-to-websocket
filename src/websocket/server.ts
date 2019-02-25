@@ -1,7 +1,7 @@
 import * as socketio from 'socket.io'
 
-const io = socketio(3000)
-let dddSocket
+const io: socketio.Server = socketio(3000)
+let dddSocket: socketio.Socket
 io.of('/hello').on('connect', socket => {
   console.log('[WebSocket]: User connected!!   ' + 'id: ' + socket.id)
   dddSocket = socket
